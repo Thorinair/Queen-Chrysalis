@@ -1,0 +1,25 @@
+{
+  "name": "QueenChrysalis",
+  "version": "1.0.0",
+  "description": "",
+  "main": "chrysalis.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Thorinair/Queen-Chrysalis.git"
+  },
+  "keywords": [
+    "Bot",
+    "Queen",
+    "Chrysalis",
+    "Pony"
+  ],
+  "author": "Thorinair",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Thorinair/Queen-Chrysalis/issues"
+  },
+  "homepage": "https://github.com/Thorinair/Queen-Chrysalis",
+  "dependencies": {
+    "request": "^2.87.0"
+  }
+}

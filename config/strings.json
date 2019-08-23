@@ -1,0 +1,15 @@
+{
+	"debug": {
+		"started":      "<STARTED>",
+		"stopped":      "<STOPPED>",
+		"download": {
+			"start": "I'm downloading the following file: %s",
+			"stop":  "Finished downloading!"
+		},
+		"waifu": {
+			"request": "Waifu request received with following parameters: Scale=%sx, Noise=%s",
+			"start":   "Waifu processing started.",
+			"finish":  "Waifu processing finished. Sending back the new file."
+		}
+	}
+}
