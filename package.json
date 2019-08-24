@@ -1,6 +1,6 @@
 {
   "name": "QueenChrysalis",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Queen Chrysalis is an extension to the Princess Luna bot, used for performing ANN operations.",
   "main": "chrysalis.js",
   "repository": {
