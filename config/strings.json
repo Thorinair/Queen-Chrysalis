@@ -1,20 +1,24 @@
 {
     "debug": {
-        "started": "<STARTED>",
-        "stopped": "<STOPPED>",
+        "started":  "<STARTED>",
+        "stopped":  "<STOPPED>",
+        "send":     "Successfully sent the data to Princess Luna.",
+        "senderrA": "Error while sending data to Princess Luna: Other error.",
+        "senderrB": "Error while sending data to Princess Luna: Timed out.",
         "download": {
             "start": "  I'm downloading the following file: %s",
             "stop":  "  Finished downloading!"
         },
         "waifu": {
-            "request": "Waifu request received with following parameters:\n  Method=%s, Noise=%s, Scale=%s",
-            "start":   "  Waifu processing started (%sx). Command used:\n    %s",
-            "finish":  "Waifu processing finished, time taken: %s sec. Sending back the new file.",
-            "delete":  "  Deleted old image: %s",
-            "errorA":  "Invalid waifu request received: Insufficient parameters.",
-            "errorB":  "Invalid waifu request received: Invalid noise level parameter.",
-            "errorC":  "Invalid waifu request received: Invalid scale parameter.",
-            "errorD":  "Invalid waifu request received: Non-existant method derived."
+            "request":   "Waifu request received with following parameters:\n  Method=%s, Noise=%s, Scale=%s",
+            "start":     "  Waifu processing started (%sx). Command used:\n    %s",
+            "finish":    "Waifu processing finished, time taken: %s sec. Sending back the new file.",
+            "finisherr": "Waifu processing finished with an error.",
+            "delete":    "Deleted old image: %s",
+            "errorA":    "Invalid waifu request received: Insufficient parameters.",
+            "errorB":    "Invalid waifu request received: Invalid noise level parameter.",
+            "errorC":    "Invalid waifu request received: Invalid scale parameter.",
+            "errorD":    "Invalid waifu request received: Non-existant method derived."
         }
     }
 }

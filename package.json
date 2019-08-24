@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Thorinair/Queen-Chrysalis",
   "dependencies": {
-    "request": "^2.87.0"
+    "request": "^2.87.0",
+    "xmlhttprequest": "github:vine77/node-XMLHttpRequest"
   }
 }

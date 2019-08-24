@@ -1,6 +1,14 @@
 {
     "options": {
         "serverport": 20200,
-        "waifupath":  "/mnt/wdblue-2tb/chrysalis/waifu"
+        "timeout":    5
+    },
+    "ann": {
+    	"waifu": {
+    		"path":    "/mnt/wdblue-2tb/chrysalis/waifu",
+    		"request": "http://luna.local/?key=%s&action=waifu&url=%s&channelid=%s&userid=%s&time=%s&size=%s",
+    		"error":   "http://luna.local/?key=%s&action=waifu&error=1&channelid=%s&userid=%s",
+    		"url":     "https://chrysalis.thorinair.net/waifu/"
+    	}
     }
 }
