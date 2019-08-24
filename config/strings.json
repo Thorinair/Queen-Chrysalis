@@ -10,7 +10,10 @@
             "request": "Waifu request received with following parameters:\n  Method=%s, Noise=%s, Scale=%s",
             "start":   "  Waifu processing started (%sx). Command used:\n    %s",
             "finish":  "Waifu processing finished, time taken: %s sec. Sending back the new file.",
-            "error":   "Invalid waifu request received."
+            "errorA":   "Invalid waifu request received: Insufficient parameters.",
+            "errorB":   "Invalid waifu request received: Invalid noise level parameter.",
+            "errorC":   "Invalid waifu request received: Invalid scale parameter.",
+            "errorD":   "Invalid waifu request received: Non-existant method derived."
         }
     }
 }
