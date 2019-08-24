@@ -1,5 +1,6 @@
 {
-	"options": {
-		"serverport": 20200
-	}
+    "options": {
+        "serverport": 20200,
+        "waifupath":  "/mnt/wdblue-2tb/chrysalis/waifu"
+    }
 }

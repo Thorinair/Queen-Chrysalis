@@ -1,0 +1,3 @@
+{
+    "waifu": "docker run --gpus all -v %s:/images nagadomi/waifu2x th waifu2x.lua -m %s -noise_level %s -scale 2 -i /images/%s -o /images/%s"
+}
