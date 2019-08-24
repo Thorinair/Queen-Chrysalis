@@ -6,6 +6,7 @@ const url            = require('url');
 const exec           = require('child_process').exec;
 
 // 3rd Party Modules
+const randomstring   = require("randomstring");
 const request        = require("request");
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
@@ -84,7 +85,7 @@ function openURL(url) {
 function sendErrorWaifu(imageIn, channelid, userid) {
 
     // Delete old image
-    var imageInPath = config.ann.waifu.path + "/" + imageIn;
+    var imageInPath = path + "/" + imageIn;
     if (fs.existsSync(imageInPath)) {
         fs.unlink(imageInPath, (err) => {
             if (err) throw err;
@@ -108,10 +109,10 @@ function sendErrorWaifu(imageIn, channelid, userid) {
 }
 
 
-function sendResultWaifu(imageIn, imageOut, channelid, userid, time) {
+function sendResultWaifu(path, imageIn, imageOut, channelid, userid, time) {
 
     // Delete old image
-    var imageInPath = config.ann.waifu.path + "/" + imageIn;
+    var imageInPath = path + "/" + imageIn;
     if (fs.existsSync(imageInPath)) {
         fs.unlink(imageInPath, (err) => {
             if (err) throw err;
@@ -122,13 +123,15 @@ function sendResultWaifu(imageIn, imageOut, channelid, userid, time) {
         });
     };
 
-    var size = fs.statSync(config.ann.waifu.path + "/" + imageOut).size / 1024 / 1024;
+    var size = fs.statSync(path + "/" + imageOut).size / 1024 / 1024;
     var timeTaken = (new Date() - time) / 1000;
+    var pathParts =  path.split("/");
+    var unique = pathParts[pathParts.length - 1];
 
     var url = util.format(
         config.ann.waifu.request,
         httpkey.key,
-        config.ann.waifu.url + imageOut,
+        config.ann.waifu.url + unique + "/" + imageOut,
         channelid,
         userid,
         timeTaken.toFixed(2),
@@ -184,9 +187,19 @@ function processReqWaifu(query) {
                     var urlParts = query.url.split("/");
                     var imageIn = urlParts[urlParts.length - 1];
                     var imageOut = imageIn.split(".").slice(0, -1).join(".") + "_n" + n + "_s" + s + ".png";
+                    var unique = randomstring.generate({
+                        length:  12,
+                        charset: "alphabetic"
+                    });
+                    var path = config.ann.waifu.path + "/" + unique;
+
+                    // Make unique directory
+                    if (!fs.existsSync(path)){
+                        fs.mkdirSync(path);
+                    }
 
                     // Download the image
-                    download(query.url, config.ann.waifu.path + "/" + imageIn, function() {
+                    download(query.url, path + "/" + imageIn, function() {
                         console.log(strings.debug.download.stop);
 
                         // RESIZE SCALE 1 OR 2
@@ -194,7 +207,7 @@ function processReqWaifu(query) {
                         // Generate command
                         var command = util.format(
                             term.waifu, 
-                            config.ann.waifu.path,
+                            path,
                             m,
                             n,
                             imageIn,
@@ -217,12 +230,12 @@ function processReqWaifu(query) {
                         exec(command, (error, stdout, stderr) => {
                             if (error) {
                                 console.error("exec error: " + error);
-                                sendErrorWaifu(imageIn, query.channelid, query.userid);
+                                sendErrorWaifu(path, imageIn, query.channelid, query.userid);
                                 return;
                             }
 
                             if (s == 1 || s == 2) {
-                                sendResultWaifu(imageIn, imageOut, query.channelid, query.userid, tStart);
+                                sendResultWaifu(path, imageIn, imageOut, query.channelid, query.userid, tStart);
                             }
                             else if (s > 2) {
 
@@ -231,7 +244,7 @@ function processReqWaifu(query) {
                                 // Generate command
                                 var command = util.format(
                                     term.waifu, 
-                                    config.ann.waifu.path,
+                                    path,
                                     m,
                                     n,
                                     imageOut,
@@ -247,13 +260,13 @@ function processReqWaifu(query) {
                                 exec(command, (error, stdout, stderr) => {
                                     if (error) {
                                         console.error("exec error: " + error);
-                                        sendErrorWaifu(imageIn, query.channelid, query.userid);
+                                        sendErrorWaifu(path, imageIn, query.channelid, query.userid);
                                         return;
                                     }
                                     
 
                                     if (s == 4) {
-                                        sendResultWaifu(imageIn, imageOut, query.channelid, query.userid, tStart);
+                                        sendResultWaifu(path, imageIn, imageOut, query.channelid, query.userid, tStart);
                                     }
                                     else if (s > 4) {
 
@@ -262,7 +275,7 @@ function processReqWaifu(query) {
                                         // Generate command
                                         var command = util.format(
                                             term.waifu, 
-                                            config.ann.waifu.path,
+                                            path,
                                             m,
                                             n,
                                             imageOut,
@@ -278,11 +291,11 @@ function processReqWaifu(query) {
                                         exec(command, (error, stdout, stderr) => {
                                             if (error) {
                                                 console.error("exec error: " + error);
-                                                sendErrorWaifu(imageIn, query.channelid, query.userid);
+                                                sendErrorWaifu(path, imageIn, query.channelid, query.userid);
                                                 return;
                                             }
 
-                                            sendResultWaifu(imageIn, imageOut, query.channelid, query.userid, tStart);
+                                            sendResultWaifu(path, imageIn, imageOut, query.channelid, query.userid, tStart);
                                         });
                                     }
                                 });

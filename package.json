@@ -1,6 +1,6 @@
 {
   "name": "QueenChrysalis",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Queen Chrysalis is an extension to the Princess Luna bot, used for performing ANN operations.",
   "main": "chrysalis.js",
   "repository": {
@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Thorinair/Queen-Chrysalis",
   "dependencies": {
+    "randomstring": "^1.1.5",
     "request": "^2.87.0",
     "xmlhttprequest": "github:vine77/node-XMLHttpRequest"
   }
