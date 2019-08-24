@@ -43,166 +43,177 @@ function parseTime(text) {
 }
 
 
-function sendResultWaifu(time, image) {
-    console.log(util.format(
-        strings.debug.waifu.finish,
-        ((new Date() - time) / 1000).toFixed(2)
-    ));
+function sendResultWaifu(time, imageIn, imageOut) {
+
+    // Delete old image
+    var imageInPath = config.options.waifupath + "/" + imageIn;
+    fs.unlink(imageInPath, (err) => {
+        if (err) throw err;
+        console.log(util.format(
+            strings.debug.waifu.delete,
+            imageInPath
+        ));
+        
+        console.log(util.format(
+            strings.debug.waifu.finish,
+            ((new Date() - time) / 1000).toFixed(2)
+        ));
+    });
 }
 
 
 function processReqWaifu(query) {
-	var tStart = new Date();
+    var tStart = new Date();
 
     if (query.url != undefined && query.channelid != undefined && query.userid != undefined)  {
 
-		// Process noise level
+        // Process noise level
         var n = query.n;
         if (n == undefined)
             n = 0;
 
-    	if (n == 0 || n == 1 || n == 2 || n == 3) {
+        if (n == 0 || n == 1 || n == 2 || n == 3) {
 
-    		// Process scale
-	        var s = query.s;
-	        if (s == undefined)
-	            s = 1;
+            // Process scale
+            var s = query.s;
+            if (s == undefined)
+                s = 1;
 
-    		if (s == 1 || s == 2 || s == 4 || s == 8) {
+            if (s == 1 || s == 2 || s == 4 || s == 8) {
 
-		    	// Process method
-		        var m = "";
-		        if (n > 0 && s == 1)
-		            m = "noise"
-		        else if (n == 0 && s > 1)
-		            m = "scale"
-		        else  if (n > 0 && s > 1)
-		            m = "noise_scale"
-		    	if (m != "") {
+                // Process method
+                var m = "";
+                if (n > 0 && s == 1)
+                    m = "noise"
+                else if (n == 0 && s > 1)
+                    m = "scale"
+                else  if (n > 0 && s > 1)
+                    m = "noise_scale"
+                if (m != "") {
 
-        			console.log(util.format(
-	                    strings.debug.waifu.request,
-	                    m,
-	                    n,
-	                    s
-	                ));
+                    console.log(util.format(
+                        strings.debug.waifu.request,
+                        m,
+                        n,
+                        s
+                    ));
 
-        			// Extract and generate image names.
-	                var urlParts = query.url.split("/");
-	                var imageIn = urlParts[urlParts.length - 1];
-	                var imageOut = imageIn.split(".").slice(0, -1).join(".") + "_n" + n + "_s" + s + ".png";
+                    // Extract and generate image names
+                    var urlParts = query.url.split("/");
+                    var imageIn = urlParts[urlParts.length - 1];
+                    var imageOut = imageIn.split(".").slice(0, -1).join(".") + "_n" + n + "_s" + s + ".png";
 
-	                // Download the image.
-	                download(query.url, config.options.waifupath + "/" + imageIn, function() {
-	                    console.log(strings.debug.download.stop);
+                    // Download the image
+                    download(query.url, config.options.waifupath + "/" + imageIn, function() {
+                        console.log(strings.debug.download.stop);
 
-	                    // RESIZE SCALE 1 OR 2
+                        // RESIZE SCALE 1 OR 2
 
-	                    // Generate command.
-	                    var command = util.format(
-	                        term.waifu, 
-	                        config.options.waifupath,
-	                        m,
-	                        n,
-	                        imageIn,
-	                        imageOut
-	                    );
-	                    if (s == 1)
-	                        console.log(util.format(
-	                            strings.debug.waifu.start,
-	                            1,
-	                            command
-	                        ));
-	                    else
-	                        console.log(util.format(
-	                            strings.debug.waifu.start,
-	                            2,
-	                            command
-	                        ));
+                        // Generate command
+                        var command = util.format(
+                            term.waifu, 
+                            config.options.waifupath,
+                            m,
+                            n,
+                            imageIn,
+                            imageOut
+                        );
+                        if (s == 1)
+                            console.log(util.format(
+                                strings.debug.waifu.start,
+                                1,
+                                command
+                            ));
+                        else
+                            console.log(util.format(
+                                strings.debug.waifu.start,
+                                2,
+                                command
+                            ));
 
-	                    // Execute command.
-	                    exec(command, (error, stdout, stderr) => {
-	                        if (error) {
-	                            console.error("exec error: " + error);
-	                            return;
-	                        }
+                        // Execute command
+                        exec(command, (error, stdout, stderr) => {
+                            if (error) {
+                                console.error("exec error: " + error);
+                                return;
+                            }
 
-	                        if (s == 1 || s == 2) {
-	                            sendResultWaifu(tStart, imageOut);
-	                        }
-	                        else if (s > 2) {
+                            if (s == 1 || s == 2) {
+                                sendResultWaifu(tStart, imageIn, imageOut);
+                            }
+                            else if (s > 2) {
 
-	                    		// RESIZE SCALE 4
+                                // RESIZE SCALE 4
 
-	                    		// Generate command.
-	                            var command = util.format(
-	                                term.waifu, 
-	                                config.options.waifupath,
-	                                m,
-	                                n,
-	                                imageOut,
-	                                imageOut
-	                            );
-	                            console.log(util.format(
-	                                strings.debug.waifu.start,
-	                                4,
-	                                command
-	                            ));
+                                // Generate command
+                                var command = util.format(
+                                    term.waifu, 
+                                    config.options.waifupath,
+                                    m,
+                                    n,
+                                    imageOut,
+                                    imageOut
+                                );
+                                console.log(util.format(
+                                    strings.debug.waifu.start,
+                                    4,
+                                    command
+                                ));
 
-	                    		// Execute command.
-	                            exec(command, (error, stdout, stderr) => {
-	                                if (error) {
-	                                    console.error("exec error: " + error);
-	                                    return;
-	                                }
-	                                
+                                // Execute command
+                                exec(command, (error, stdout, stderr) => {
+                                    if (error) {
+                                        console.error("exec error: " + error);
+                                        return;
+                                    }
+                                    
 
-	                                if (s == 4) {
-	                                    sendResultWaifu(tStart, imageOut);
-	                                }
-	                                else if (s > 4) {
+                                    if (s == 4) {
+                                        sendResultWaifu(tStart, imageIn, imageOut);
+                                    }
+                                    else if (s > 4) {
 
-	                    				// RESIZE SCALE 
+                                        // RESIZE SCALE 
 
-	                    				// Generate command.
-	                                    var command = util.format(
-	                                        term.waifu, 
-	                                        config.options.waifupath,
-	                                        m,
-	                                        n,
-	                                        imageOut,
-	                                        imageOut
-	                                    );
-	                                    console.log(util.format(
-	                                        strings.debug.waifu.start,
-	                                        8,
-	                                        command
-	                                    ));
+                                        // Generate command
+                                        var command = util.format(
+                                            term.waifu, 
+                                            config.options.waifupath,
+                                            m,
+                                            n,
+                                            imageOut,
+                                            imageOut
+                                        );
+                                        console.log(util.format(
+                                            strings.debug.waifu.start,
+                                            8,
+                                            command
+                                        ));
 
-	                    				// Execute command.
-	                                    exec(command, (error, stdout, stderr) => {
-	                                        if (error) {
-	                                            console.error("exec error: " + error);
-	                                            return;
-	                                        }
+                                        // Execute command
+                                        exec(command, (error, stdout, stderr) => {
+                                            if (error) {
+                                                console.error("exec error: " + error);
+                                                return;
+                                            }
 
-	                                        sendResultWaifu(tStart, imageOut);
-	                                    });
-	                                }
-	                            });
-	                        }                  
+                                            sendResultWaifu(tStart, imageIn, imageOut);
+                                        });
+                                    }
+                                });
+                            }                  
 
-	                    });
-	                });
+                        });
+                    });
 
-		        }
-		        else {
-		            console.log(strings.debug.waifu.errorD);
-		        } 
-    		}
-    		else {
-        		console.log(strings.debug.waifu.errorC);
-    		}
+                }
+                else {
+                    console.log(strings.debug.waifu.errorD);
+                } 
+            }
+            else {
+                console.log(strings.debug.waifu.errorC);
+            }
         }
         else {
             console.log(strings.debug.waifu.errorB);
