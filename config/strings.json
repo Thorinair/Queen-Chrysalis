@@ -1,10 +1,11 @@
 {
     "debug": {
-        "started":  "<STARTED>",
-        "stopped":  "<STOPPED>",
-        "send":     "Successfully sent the data to Princess Luna.",
-        "senderrA": "Error while sending data to Princess Luna: Other error.",
-        "senderrB": "Error while sending data to Princess Luna: Timed out.",
+        "started":   "<STARTED>",
+        "stopped":   "<STOPPED>",
+        "send":      "Successfully sent the data to Princess Luna.",
+        "senderrA":  "Error while sending data to Princess Luna: Other error.",
+        "senderrB":  "Error while sending data to Princess Luna: Timed out.",
+        "queueloop": "There are requests waiting in queue (%s requests waiting)...",
         "download": {
             "start": "  I'm downloading the following file: %s",
             "stop":  "  Finished downloading!"
@@ -14,11 +15,13 @@
             "start":     "  Waifu processing started (%sx). Command used:\n    %s",
             "finish":    "Waifu processing finished, time taken: %s sec. Sending back the new file.",
             "finisherr": "Waifu processing finished with an error.",
+            "sendqueue": "  Sending back queue info.",
             "delete":    "Deleted old image: %s",
             "errorA":    "Invalid waifu request received: Insufficient parameters.",
             "errorB":    "Invalid waifu request received: Invalid noise level parameter.",
             "errorC":    "Invalid waifu request received: Invalid scale parameter.",
-            "errorD":    "Invalid waifu request received: Non-existant method derived."
+            "errorD":    "Invalid waifu request received: Non-existant method derived.",
+            "queue":     "  Waifu request placed in queue (%s requests left)..."
         }
     }
 }
