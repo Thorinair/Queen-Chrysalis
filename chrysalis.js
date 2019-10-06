@@ -395,12 +395,22 @@ var processRequest = function(req, res) {
 
     //console.log("  Connection! " + res.socket.remoteAddress + " " + req.url);
 
-    res.writeHead(200, [
-        ["Content-Type", "text/plain"], 
-        ["Content-Length", 0]
-            ]);
-    if (query.key == httpkey.key)
-    res.write("");
+    if (query.key == httpkey.key) {
+    	if (query.action == "ping") {
+		    res.writeHead(200, [
+		        ["Content-Type", "text/plain"], 
+		        ["Content-Length", 4]
+		            ]);
+    		res.write("pong");
+    	}
+    	else {
+		    res.writeHead(200, [
+		        ["Content-Type", "text/plain"], 
+		        ["Content-Length", 0]
+		            ]);
+    		res.write("");
+    	}
+    }
     res.end();
 };
 
