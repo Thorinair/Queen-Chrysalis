@@ -21,7 +21,11 @@
             "errorB":    "Invalid waifu request received: Invalid noise level parameter.",
             "errorC":    "Invalid waifu request received: Invalid scale parameter.",
             "errorD":    "Invalid waifu request received: Non-existant method derived.",
-            "queue":     "  Waifu request placed in queue (%s requests left)..."
+            "queue":     "  Waifu request placed in queue (%s requests left)...",
+            "toobig":    "!!! Waifu recovered from a too big file crash, sending back message.",
+            "queueold":  "Loading: Waifu queue file...",
+            "queuenew":  "Created: Waifu queue file.",
+            "queuedone": "  Done."
         }
     }
 }

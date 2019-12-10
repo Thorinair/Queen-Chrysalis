@@ -1,7 +1,9 @@
 {
     "options": {
+        "queuepath":  "/home/thorinair/node/data/queue.json",
         "serverport": 20200,
         "timeout":    5,
+        "mainloop":   1,
     	"queueloop":  10,
     	"queuewait":  2
     },
@@ -10,6 +12,7 @@
     		"path":    "/mnt/wdblue-2tb/chrysalis/waifu",
     		"request": "http://luna.local/?key=%s&action=waifu&url=%s&channelid=%s&userid=%s&time=%s&size=%s",
     		"error":   "http://luna.local/?key=%s&action=waifu&error=1&channelid=%s&userid=%s",
+            "toobig":  "http://luna.local/?key=%s&action=waifu&toobig=1&channelid=%s&userid=%s",
     		"queue":   "http://luna.local/?key=%s&action=waifu&queue=%s&channelid=%s&userid=%s",
     		"url":     "https://chrysalis.thorinair.net/waifu/"
     	}
