@@ -26,6 +26,12 @@
             "queueold":  "Loading: Waifu queue file...",
             "queuenew":  "Created: Waifu queue file.",
             "queuedone": "  Done."
+        },
+        "camera": {
+            "request":   "Camera request received with following parameters:\n  Status=%s",
+            "finish":    "Camera processing finished, new status: %s. Sending back the response.",
+            "errorA":    "Invalid camera request received: Insufficient parameters.",
+            "errorB":    "Invalid camera request received: Invalid status parameter."
         }
     }
 }

@@ -408,12 +408,53 @@ function processReqWaifu(query) {
     }
 }
 
+function processReqCamera(query) {
+    if (query.status != undefined)  {
+        if (query.status == "on" || query.status == "off") {
+            console.log(util.format(
+                strings.debug.camera.request,
+                query.status
+            ));
+
+            if (query.status == "on")
+                exec("sudo /home/thorinair/mjpg-streamer_norm.sh start", (error, stdout, stderr) => {
+                    console.log(stdout);
+                });
+            else if (query.status == "off")
+                exec("sudo /home/thorinair/mjpg-streamer_norm.sh stop", (error, stdout, stderr) => {
+                    console.log(stdout);
+                });
+
+            var url = util.format(
+                config.ann.camera.response,
+                httpkey.key,
+                "chrysalis",
+                query.status
+            );
+
+            openURL(url);
+
+            console.log(util.format(
+                strings.debug.camera.finish,
+                query.status
+            ));
+        }
+        else {
+            console.log(strings.debug.camera.errorB);
+        }
+    }
+    else {
+        console.log(strings.debug.camera.errorA);
+    }
+}
+
 var processRequest = function(req, res) {
     if (req.method == "GET") {
         var query = url.parse(req.url, true).query;
         if (query.key == httpkey.key)
             switch (query.action) {
-                case "waifu": processReqWaifu(query); break;
+                case "waifu":  processReqWaifu(query);  break;
+                case "camera": processReqCamera(query); break;
             }  
     }
 

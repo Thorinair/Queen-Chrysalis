@@ -15,6 +15,9 @@
             "toobig":  "http://luna.local/?key=%s&action=waifu&toobig=1&channelid=%s&userid=%s",
     		"queue":   "http://luna.local/?key=%s&action=waifu&queue=%s&channelid=%s&userid=%s",
     		"url":     "https://chrysalis.thorinair.net/waifu/"
-    	}
+    	},
+        "camera": {
+            "response": "http://luna.local/?key=%s&action=camera&device=%s&response=%s"
+        }
     }
 }
